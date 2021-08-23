@@ -1,9 +1,14 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
 
-# Create your views here.
+from profiles_api import serialzers
+
+
 class HelloApiView(APIView):
     """ Test API View """
+
+    serializer_class = serialzers.HelloSerializer
 
     def get(self, request, format=None):
         """ Return a list of API View features"""
@@ -15,3 +20,14 @@ class HelloApiView(APIView):
         ]
 
         return Response({'message': 'Hello!', 'an_apiview': an_apiview})
+
+    def post(self, request):
+        """Create a hello message with our name"""
+        serializer = self.serializer_class(data=request.data)
+
+        # name max char 10
+        if serializer.is_valid():
+            name = serializer.validated_data.get('name')
+            return Response({'message': f'Hello {name}'})
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
