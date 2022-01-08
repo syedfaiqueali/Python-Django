@@ -21,6 +21,7 @@ class Book(models.Model):
         related_name='books',
         on_delete=models.CASCADE #When category delete so all its books also delete
     )
+    author = models.CharField(max_length=100, default='Anonymous')
     isbn = models.CharField(max_length=13)
     pages = models.IntegerField()
     price = models.IntegerField()

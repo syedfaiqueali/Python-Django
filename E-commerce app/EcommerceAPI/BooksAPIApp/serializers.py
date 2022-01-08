@@ -22,6 +22,7 @@ class BookSerializer(serializers.ModelSerializer):
             'id',
             'title',
             'category',
+            'author',
             'isbn',
             'pages',
             'price',
