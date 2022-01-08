@@ -6,6 +6,9 @@ class Category(models.Model):
     """Database model for categories in system"""
     title = models.CharField(max_length=255)
 
+    class Meta:
+        verbose_name_plural = 'Categories' #For name correction in admin panel
+
     def __str__(self):
         return self.title
 
