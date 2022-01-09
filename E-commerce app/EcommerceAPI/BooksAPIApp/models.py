@@ -58,3 +58,14 @@ class Product(models.Model):
 
     def __str__(self):
         return f'{self.product_tag} {self.name}'
+
+
+class User(models.Model):
+    """Database model for users in system"""
+    name = models.CharField(max_length=255)
+    email = models.EmailField(max_length=255, unique=True)
+    address = models.CharField(max_length=255)
+    number = models.CharField(max_length=11)
+
+    def __str__(self):
+        return self.name
