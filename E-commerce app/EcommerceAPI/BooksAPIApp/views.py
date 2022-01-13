@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from rest_framework import generics
+from rest_framework import generics, viewsets
 
-from .models import Category, Book, Product
-from .serializers import CategorySerializer, BookSerializer, ProductSerializer
+from .models import Category, Book, Product, User, Order
+from .serializers import CategorySerializer, BookSerializer, ProductSerializer, UserSerializer, OrderSerializer
 
 
 # Create your views here.
@@ -40,3 +40,15 @@ class DetailProduct(generics.RetrieveUpdateDestroyAPIView):
     """ View for Product Detail"""
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    """ Handle creating and updating profiles"""
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+
+class OrderViewSet(viewsets.ModelViewSet):
+    """ Handle creating and updating profiles"""
+    serializer_class = OrderSerializer
+    queryset = Order.objects.all()
