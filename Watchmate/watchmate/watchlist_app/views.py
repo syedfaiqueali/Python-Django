@@ -1,4 +1,4 @@
-from django.shortcuts import render
+'''from django.shortcuts import render
 from django.http import JsonResponse
 
 from watchlist_app.models import Movie
@@ -22,3 +22,4 @@ def movie_detail(request, pk):
         'active': movie.active
         }
     return JsonResponse(data)
+'''
