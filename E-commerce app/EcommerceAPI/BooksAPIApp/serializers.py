@@ -1,5 +1,7 @@
 from rest_framework import serializers
-from .models import Category, Book, Product
+from django.contrib.auth.models import User
+
+from .models import Category, Book, Product, Order
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -50,3 +52,40 @@ class ProductSerializer(serializers.ModelSerializer):
             'status',
             'date_created'
         )
+
+class OrderSerializer(serializers.ModelSerializer):
+    """Serializes a Order object"""
+
+    class Meta:
+        model = Order
+        fields = (
+            'order_id',
+            'user',
+            'product',
+            'date_created'
+        )
+
+
+class UserSerializer(serializers.ModelSerializer):
+    """Serializes a User object"""
+
+    class Meta:
+        model = User
+        fields = ('id','username','email')
+
+
+class RegisterSerializer(serializers.ModelSerializer):
+    """Serializes a User object"""
+
+    class Meta:
+        model = User
+        fields = ('id','username','email', 'password')
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            validated_data['username'],
+            validated_data['email'],
+            validated_data['password'],
+        )
+        return user
