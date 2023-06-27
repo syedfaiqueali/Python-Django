@@ -1,6 +1,7 @@
 {
     "python.analysis.typeCheckingMode": "basic",
     "cSpell.words": [
-        "psycopg"
+        "psycopg",
+        "viewsets"
     ]
 }
