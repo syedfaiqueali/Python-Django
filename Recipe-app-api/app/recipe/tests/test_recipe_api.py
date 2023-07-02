@@ -11,7 +11,7 @@ from rest_framework import status
 from rest_framework.test import APIClient
 
 from core.models import (
-    Recipe, 
+    Recipe,
     Tag,
     Ingredient,
 )
@@ -29,6 +29,7 @@ def detail_url(recipe_id):
     """Create and return a recipe detail URL."""
     return reverse('recipe:recipe-detail', args=[recipe_id])
 
+
 def create_recipe(user, **params):
     """Create and return a sample recipe."""
     defaults = {
@@ -42,6 +43,7 @@ def create_recipe(user, **params):
 
     recipe = Recipe.objects.create(user=user, **defaults)
     return recipe
+
 
 def create_user(**params):
     """Create and return a new user."""
@@ -67,7 +69,7 @@ class PrivateRecipeAPITests(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = create_user(
-            email='user@example.com', 
+            email='user@example.com',
             password='testpass123',
         )
         self.client.force_authenticate(self.user)
@@ -125,7 +127,7 @@ class PrivateRecipeAPITests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         recipe = Recipe.objects.get(id=res.data['id'])
-        for key,val in payload.items():
+        for key, val in payload.items():
             # getattr(recipe, key) means recipe.any_attribute
             self.assertEqual(getattr(recipe, key), val)
         self.assertEqual(recipe.user, self.user)
@@ -170,7 +172,7 @@ class PrivateRecipeAPITests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         recipe.refresh_from_db()
-        for key,val in payload.items():
+        for key, val in payload.items():
             self.assertEqual(getattr(recipe, key), val)
         self.assertEqual(recipe.user, self.user)
 
@@ -227,7 +229,7 @@ class PrivateRecipeAPITests(TestCase):
         recipes = Recipe.objects.filter(user=self.user)
         self.assertEqual(recipes.count(), 1)
         recipe = recipes[0]
-        self.assertEqual(recipe.tags.count(),2)
+        self.assertEqual(recipe.tags.count(), 2)
         for tag in payload['tags']:
             exists = recipe.tags.filter(
                 name=tag['name'],
@@ -250,7 +252,7 @@ class PrivateRecipeAPITests(TestCase):
         recipes = Recipe.objects.filter(user=self.user)
         self.assertEqual(recipes.count(), 1)
         recipe = recipes[0]
-        self.assertEqual(recipe.tags.count(),2)
+        self.assertEqual(recipe.tags.count(), 2)
         self.assertIn(tag_indian, recipe.tags.all())
         for tag in payload['tags']:
             exists = recipe.tags.filter(
@@ -313,7 +315,7 @@ class PrivateRecipeAPITests(TestCase):
         recipes = Recipe.objects.filter(user=self.user)
         self.assertEqual(recipes.count(), 1)
         recipe = recipes[0]
-        self.assertEqual(recipe.ingredients.count(),2)
+        self.assertEqual(recipe.ingredients.count(), 2)
         for ingredient in payload['ingredients']:
             exists = recipe.ingredients.filter(
                 name=ingredient['name'],
@@ -336,7 +338,7 @@ class PrivateRecipeAPITests(TestCase):
         recipes = Recipe.objects.filter(user=self.user)
         self.assertEqual(recipes.count(), 1)
         recipe = recipes[0]
-        self.assertEqual(recipe.ingredients.count(),2)
+        self.assertEqual(recipe.ingredients.count(), 2)
         self.assertIn(ingredient, recipe.ingredients.all())
         for ingredient in payload['ingredients']:
             exists = recipe.ingredients.filter(

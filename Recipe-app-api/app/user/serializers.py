@@ -25,13 +25,12 @@ class UserSerializer(serializers.ModelSerializer):
         """Update and return user."""
 
         # Remove password after retrieving it
-        password = validated_data.pop('password', None) 
+        password = validated_data.pop('password', None)
         user = super().update(instance, validated_data)
 
         if password:
             user.set_password(password)
             user.save()
-        
         return user
 
 
@@ -48,13 +47,13 @@ class AuthTokenSerializer(serializers.Serializer):
         email = attrs.get('email')
         password = attrs.get('password')
         user = authenticate(
-            request = self.context.get('requests'),
-            username = email,
-            password = password,
+            request=self.context.get('requests'),
+            username=email,
+            password=password,
         )
         if not user:
             msg = _('Unable to authenticate with provided credentials')
             raise serializers.ValidationError(msg, code='authorization')
-        
+
         attrs['user'] = user
         return attrs
