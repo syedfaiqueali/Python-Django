@@ -80,7 +80,7 @@ class PrivateIngredientApiTests(TestCase):
         ingredient = Ingredient.objects.create(user=self.user, name='Cilantro')
         payload = {'name': 'Coriander'}
         url = detail_url(ingredient.id)
-        res = self.client.get(url)
+        res = self.client.patch(url, payload)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         ingredient.refresh_from_db()
